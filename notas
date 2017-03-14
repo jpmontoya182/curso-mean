@@ -1,0 +1,16 @@
+show dbs
+db.bookmarks.save({id: 1, title: 'Curso de Angular', url: 'http://webskarte.com', description: 'hola'});
+db.bookmarks.find()
+---------------------------------
+ccygdrive
+---------------------------------
+npm uninstall xxxx --save
+---------------------------------
+
+Base de datos
+---------------------------------
+show dbs
+use curso_mean
+db.artists.save(name: 'delaFuente', description : 'Musica country', image : 'null' );
+db.artists.find()
+show collections
