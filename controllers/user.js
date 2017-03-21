@@ -5,7 +5,7 @@ var User = require('../models/user');
 var jwt = require('../services/jwt');
 
 function pruebas(req, res){
-    res.status(200).send({message :  'probando una accion del controlador de usuarios'  });
+    res.status(200).send({message :  'Accion en el controlador de usuarios ...'});
 }
 
 function saverUser(req, res){
