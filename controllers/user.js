@@ -32,7 +32,7 @@ function saverUser(req, res){
                             res.status(404).send({message : 'No se ha registrado el usuario !!'});
                         }else{
                             // podemos ver el contenido de lo almacenado
-                            // res.status(200).send({user : userStored});
+                            res.status(200).send({user : userStored});
                         }
                     }
                 })
@@ -79,8 +79,60 @@ function loginUser(req, res){
     });
 }
 
+// se usa el metodo PUT
+function updateUser(req, res){
+    var userId = req.params.id;    
+    var update = req.body;
+
+    User.findByIdAndUpdate(userId, update, (err, userUpdated) =>{
+        if(err)
+        {  // error de server
+            res.status(500).send({message : 'Error al actualizar el usuario ...'});
+        } else {
+            if(!userUpdated){
+                res.status(404).send({ message : 'No se ha podido actualizar el usuario ...' });
+            }else{
+                res.status(200).send({ user : userUpdated });
+            }
+        }
+    });
+}
+
+function uploadImage(req, res){
+    var userId = req.params.id;
+    var file_name = 'Imagen no cargada';
+
+    if(req.files){
+        var file_path = req.files.image.path;
+        var file_split = file_path.split('\\');
+        file_name = file_split[file_split.length - 1];
+        var ext_split = file_name.split('\.');
+        console.log(ext_split);
+        var file_ext = ext_split[1];
+        console.log(file_ext);
+        
+        if( file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif')
+        {
+            User.findByIdAndUpdate(userId, {image : file_name}, (err, userUpdated)=>{
+            if(!userUpdated){
+                res.status(404).send({ message : 'No se ha podido actualizar el usuario ...' });
+            }else{
+                res.status(200).send({ user : userUpdated });
+            }
+            });
+        } else{
+            res.status(200).send({message : 'Extension del arcjivo no valida'});
+        }
+
+    }else{
+        res.status(404).send({ message : 'No se ha cargado ninguna imagen ...' });
+    }
+}
+
 module.exports = {
     pruebas, 
     saverUser,
-    loginUser
+    loginUser, 
+    updateUser, 
+    uploadImage
 };
