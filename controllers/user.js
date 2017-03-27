@@ -1,5 +1,7 @@
 'use strict'
 
+var fs = require('fs');
+var path = require('path');
 var bcrypt = require('bcrypt-nodejs');
 var User = require('../models/user');
 var jwt = require('../services/jwt');
@@ -7,7 +9,7 @@ var jwt = require('../services/jwt');
 function pruebas(req, res){
     res.status(200).send({message :  'Accion en el controlador de usuarios ...'});
 }
-
+// Guardar la informacion del usuario
 function saverUser(req, res){
     var user = new User();
     var params = req.body;
@@ -44,7 +46,7 @@ function saverUser(req, res){
         res.status(200).send({message : 'Ingresa la contraseña !!'});
     }
 }
-
+// loguear al usuario
 function loginUser(req, res){
     var params = req.body;
 
@@ -78,7 +80,6 @@ function loginUser(req, res){
         }
     });
 }
-
 // se usa el metodo PUT
 function updateUser(req, res){
     var userId = req.params.id;    
@@ -97,7 +98,7 @@ function updateUser(req, res){
         }
     });
 }
-
+// cargar Imagenes
 function uploadImage(req, res){
     var userId = req.params.id;
     var file_name = 'Imagen no cargada';
@@ -128,11 +129,25 @@ function uploadImage(req, res){
         res.status(404).send({ message : 'No se ha cargado ninguna imagen ...' });
     }
 }
+// obtener las imagenes del servidor
+function getImageFile(req, res){
+    var imageFile = req.params.imageFile;
+    var path_File = './uploads/users/' + imageFile;
+    fs.exists(path_File, function(exists){
+        if(exists){
+            res.sendFile(path.resolve(path_File));
+        }else{
+            res.status(200).send({message : 'No existe la imagen ...'});
+        }
+    });
+}
 
+// exportamos las funciones
 module.exports = {
     pruebas, 
     saverUser,
     loginUser, 
     updateUser, 
-    uploadImage
+    uploadImage,
+    getImageFile
 };
