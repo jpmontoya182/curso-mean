@@ -108,9 +108,7 @@ function uploadImage(req, res){
         var file_split = file_path.split('\\');
         file_name = file_split[file_split.length - 1];
         var ext_split = file_name.split('\.');
-        console.log(ext_split);
         var file_ext = ext_split[1];
-        console.log(file_ext);
         
         if( file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif')
         {
@@ -118,13 +116,12 @@ function uploadImage(req, res){
             if(!userUpdated){
                 res.status(404).send({ message : 'No se ha podido actualizar el usuario ...' });
             }else{
-                res.status(200).send({ user : userUpdated });
+                res.status(200).send({ image: file_name, user : userUpdated });
             }
             });
         } else{
             res.status(200).send({message : 'Extension del arcjivo no valida'});
         }
-
     }else{
         res.status(404).send({ message : 'No se ha cargado ninguna imagen ...' });
     }
