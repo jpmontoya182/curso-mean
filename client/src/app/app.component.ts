@@ -11,18 +11,22 @@ import { User } from './models/user';
 export class AppComponent implements OnInit{
   public title = 'musify';
   public user : User;
+  public user_register : User;
   public identity;
   public token;
   public errorMensaje;
+  public alertRegister;
 
   constructor(
     private _userService: UserService
   ){
     this.user =  new User('','','','','','ROLE_USER','null');
+    this.user_register =  new User('','','','','','ROLE_USER','null');
   }
 
   ngOnInit(){
-
+    this.identity = this._userService.getIdentity();
+    this.token = this._userService.getToken();
   }
 
   public onSubmit(){
@@ -35,6 +39,8 @@ export class AppComponent implements OnInit{
         if (!this.identity._id) {
           alert('el usuario no esta correctamente identificado')
         } else {
+          // Crear el locasstorage 
+          localStorage.setItem('identity', JSON.stringify(identity));
           // Obtener el token
           this._userService.singup(this.user, true).subscribe(
             response => {
@@ -44,8 +50,8 @@ export class AppComponent implements OnInit{
               if (this.token.lenght <= 0) {
                 alert('el token no se ha generado')
               }else{
-                console.log(token);
-                console.log(identity);
+                // crea elemento en el localStorage para tener el token
+                localStorage.setItem('token', token);
               }
             }, 
             error => {
@@ -68,4 +74,39 @@ export class AppComponent implements OnInit{
       }
     );
   }
+
+  onSubmitRegister(){
+    console.log(this.user_register);
+
+    this._userService.register(this.user_register).subscribe(
+      response => {
+        let user = response.user;
+        this.user_register = user;
+        if (!user._id) {
+          this.alertRegister = 'Error al registrarse';
+        } else {
+          this.alertRegister = 'El registro se realizado correctemante, identificate con  : ' + this.user_register.email;
+          this.user_register = new User('','','','','','ROLE_USER','null');
+        }
+      }, 
+      error => {
+        var errorM = <any>error;
+        if (errorM != null) {
+          var body = JSON.parse(error._body);
+          this.alertRegister = body.message;
+        }
+      }
+    )
+  }
+
+
+
+  logout(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('identity');   
+    localStorage.clear();
+    this.identity = null;
+    this.token = null;
+  }
+
 }
