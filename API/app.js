@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 // configurar cabeceras 
 app.use((req, res, next)=>{
     res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, X-Requested-With, Accept, Access-Control-Allow-Request-Method');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-API-KEY, X-Requested-With, Accept, Access-Control-Allow-Request-Method');
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
 

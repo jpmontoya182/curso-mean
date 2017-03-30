@@ -58,7 +58,7 @@ function loginUser(req, res){
             res.status(500).send({message : 'Error en la petición'});
         }else{
             if(!user){
-                re.status(404).send({message : 'El usuario no existe'});
+                res.status(404).send({message : 'El usuario no existe'});
             }else{
                 // comprobar la contraseña
                 bcrypt.compare(password, user.password, (err, check)=>{
@@ -73,7 +73,7 @@ function loginUser(req, res){
                             res.status(200).send({user});
                         }
                     }else{
-                        res.status(404).send({message : 'el usuario no ha podido ingresar'});
+                        res.status(404).send({message : 'Por favor valide los datos ingresados'});
                     }
                 });
             }
