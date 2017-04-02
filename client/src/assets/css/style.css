@@ -1,3 +1,27 @@
-body{
+html, body{
+    margin: 0px;
+    height: 100%;
     background-color: #eee;
+}
+
+.navigation{
+    text-align: center;
+    color: white;
+    background: #1c1c1f;
+    height: 100%;
+}
+.navigation a{
+    color: #DDD;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display:block;
+    text-decoration: none;
+}
+
+.head-title{
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    display: block;
 }

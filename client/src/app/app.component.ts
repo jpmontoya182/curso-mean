@@ -16,10 +16,12 @@ export class AppComponent implements OnInit{
   public token;
   public errorMensaje;
   public alertRegister;
+  public url: string;
 
   constructor(
     private _userService: UserService
   ){
+    this.url = this._userService.url;
     this.user =  new User('','','','','','ROLE_USER','null');
     this.user_register =  new User('','','','','','ROLE_USER','null');
   }
@@ -63,7 +65,6 @@ export class AppComponent implements OnInit{
             }
           );
         }
-        console.log(response);
       }, 
       error =>{
         var errorM = <any>error;
@@ -76,8 +77,6 @@ export class AppComponent implements OnInit{
   }
 
   onSubmitRegister(){
-    console.log(this.user_register);
-
     this._userService.register(this.user_register).subscribe(
       response => {
         let user = response.user;
@@ -99,14 +98,14 @@ export class AppComponent implements OnInit{
     )
   }
 
-
-
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('identity');   
     localStorage.clear();
     this.identity = null;
     this.token = null;
+    this.user =  new User('','','','','','ROLE_USER','null');
+    this.errorMensaje = null;
   }
 
 }

@@ -84,6 +84,10 @@ function loginUser(req, res){
 function updateUser(req, res){
     var userId = req.params.id;    
     var update = req.body;
+    // validamos el id enviado con el del payload de jwt.ts
+    if (userId != req.user.sub) {
+       return res.status(500).send({message : 'No tienes permisos para actualizar el usuario ...'});
+    } 
 
     User.findByIdAndUpdate(userId, update, (err, userUpdated) =>{
         if(err)

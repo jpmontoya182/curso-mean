@@ -36,6 +36,7 @@ export class UserService{
         }
         return this.identity;
     }
+    
     public getToken(){
         let token = localStorage.getItem('token');
         if (token != 'undefined') {
@@ -47,11 +48,22 @@ export class UserService{
     }
 
     public register(user_to_register){
+        // convertir a un string
         let params = JSON.stringify(user_to_register);
         let headers = new Headers({'Content-Type': 'application/json'});
 
         return this._https.post(this.url + 'register', params, {headers : headers})
                           .map(res => res.json());
 
+    }
+
+    public updateUser(user_to_update){
+        let params = JSON.stringify(user_to_update);
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization' : this.getToken()
+        });
+        return this._https.put(this.url+'update-user/'+user_to_update._id, params, {headers: headers})
+                          .map(res => res.json());
     }
 }
