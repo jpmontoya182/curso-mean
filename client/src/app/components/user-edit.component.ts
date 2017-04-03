@@ -40,7 +40,7 @@ export class UserEditComponent implements OnInit{
                 } else {  
                     // this.user = response.user;
                     localStorage.setItem('identity', JSON.stringify(this.user));
-                    document.getElementById('name-logged').innerHTML = this.user.name; 
+                    document.getElementById('identity_name').innerHTML = this.user.name; 
 
                     if (!this.filesToUpload) {
                         // redireccion

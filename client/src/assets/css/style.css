@@ -3,7 +3,13 @@ html, body{
     height: 100%;
     background-color: #eee;
 }
-
+.head-title{
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    display: block;
+}
 .navigation{
     text-align: center;
     color: white;
@@ -12,16 +18,40 @@ html, body{
 }
 .navigation a{
     color: #DDD;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px 0px;
     display:block;
     text-decoration: none;
 }
-
-.head-title{
-    font-size: 20px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 25px;
-    display: block;
+.navigation a:hover{
+    color: #FFF;
 }
+
+.navigation .glyphicon{
+    font-size: 25px;
+    display: block;
+    width: 100%;
+}
+#user-logged{
+    text-align: center;
+    background: #1c1c1f;
+    position: absolute;
+    bottom: 0px;
+    border-top: 1px solid #444;
+    width: 75%
+}
+#user-logged .user-image{
+    background:  #eee;
+    border-radius: 100px;
+    height: 57px;
+    width: 57px;
+    margin: 0px auto;
+    margin-top: 15px;
+    overflow: hidden;
+}
+#user-logged .user-image img{
+    width: 57px;
+}
+.btn-logout{
+    cursor: pointer;
+}
+

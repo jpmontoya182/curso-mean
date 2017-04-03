@@ -6,12 +6,12 @@
       {{title}}
     </a>
   </h1>
-  <nav class="navigation">
+  <nav id="navigation">
       <a href="#">
         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
         Buscar
       </a>
-      <a href="#">
+      <a [routerLink]="['/artists',1]">
         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
         Artistas
       </a>
@@ -20,36 +20,39 @@
         Albums
       </a>               
   </nav>
-  <nav class="navigation" id="user-logged">
+  <nav id="user-logged">
     <div class="user-image">
-      <img id="image-logged" src="{{url + 'get-image-user/' + identity.image}}" style="width:100px;"/>
+      <img id="image-logged" src="{{url + 'get-image-user/' + identity.image}}"/>
     </div>
-    <span id="name-logged">
+    <span id="identity_name">
       {{identity.name}}
     </span>
-    <span class="btn btn-warning" (click)="logout()">Cerrar Sesión</span>
-    <span>
-      <a [routerLink]="['/mis-datos']">
-        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-        Mis Datos
-      </a>
-    </span>
+
+    <a (click)="logout()" class="btn-logout">
+      <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+      Salir
+    </a>
+    <a [routerLink]="['/mis-datos']">
+      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+      Mis Datos
+    </a>
   </nav>
 </div>
+
 <!--Contenido-->
-<div *ngIf="identity" class="central col-lg-11">
+<div [class.hidden]="!identity" class="central col-lg-11">
   <router-outlet></router-outlet>
 </div>
 
-<div class="central col-lg-11" *ngIf="!identity">
-  <div class="col-lg-6">
+<div class="central col-lg-12" *ngIf="!identity">
+  <div class="col-lg-5">
     <h1>Ingresar</h1>
     <div *ngIf="errorMensaje">
       <div class="alert alert-info">
         <strong>Error: </strong> {{ errorMensaje }}
       </div>
     </div>
-    <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="col-md-7">
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="col-md-10">
       <p>
         <label for="">Correo Electronico:</label>
         <input type="email" #email="ngModel" name="email" [(ngModel)]="user.email" class="form-control" required>
