@@ -58,9 +58,10 @@ export class UserEditComponent implements OnInit{
                 }
             },
             error => {
+            
                 var errorM = <any>error;
                 if (errorM != null) {
-                    var body = JSON.parse(error._body);
+                    let body = JSON.parse(error._body);
                     this.alertMessage = body.message;
                 }
             });

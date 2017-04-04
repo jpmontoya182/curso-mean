@@ -17,7 +17,7 @@ function saverUser(req, res){
     user.name = params.name;
     user.surname = params.surname;
     user.email = params.email;
-    user.role = 'ROLE_ADMIN';
+    user.role = 'ROLE_USER';
     user.image = 'null';
 
     if(params.password){
@@ -52,6 +52,10 @@ function loginUser(req, res){
 
     var email = params.email;
     var password = params.password;
+
+    if (!email || email == null) {
+        return res.status(404).send({message : 'El email no es valido'});
+    } 
 
     User.findOne({email : email.toLowerCase()}, (err, user) => {
         if(err){

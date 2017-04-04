@@ -10,6 +10,10 @@ html, body{
     margin-bottom: 25px;
     display: block;
 }
+.actived{
+    border-bottom: 4px solid #84BD00;
+    padding-bottom: 4px;
+}
 .navigation{
     text-align: center;
     color: white;
