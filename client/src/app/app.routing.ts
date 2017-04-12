@@ -5,19 +5,16 @@ import { Routes, RouterModule  } from '@angular/router';
 import { UserEditComponent } from './components/user-edit.component';
 // importar artist
 import { ArtistListComponent } from './components/artist-list.component';
+import { ArtistAddComponent } from './components/artist-add.component';
+import { HomeComponent } from './components/home.component';
 
 const appRoutes : Routes = [
-    {
-        path : '', 
-        redirectTo : '/artists/1',
-        pathMatch : 'full'
-    },
-    {path : '', component : ArtistListComponent },
-    {path: 'artists/:page', component : ArtistListComponent},
+    {path : '', component : HomeComponent },
+    {path: 'artistas/:page', component : ArtistListComponent},
+    {path: 'crear-artista', component : ArtistAddComponent},
     {path : 'mis-datos', component : UserEditComponent },
-    {path : '**', component : ArtistListComponent }    
+    {path : '**', component : HomeComponent }
 
-    
 ];
 
 export const appRoutingProviders : any[] = [];

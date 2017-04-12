@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './services/user.service';
 import { User } from './models/user';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
@@ -19,7 +21,9 @@ export class AppComponent implements OnInit{
   public url: string;
 
   constructor(
-    private _userService: UserService
+    private _userService: UserService,
+    private _route: ActivatedRoute, 
+    private _router : Router
   ){
     this.url = this._userService.url;
     this.user =  new User('','','','','','ROLE_USER','null');
@@ -106,6 +110,7 @@ export class AppComponent implements OnInit{
     this.token = null;
     this.user =  new User('','','','','','ROLE_USER','null');
     this.errorMensaje = null;
+    this._router.navigate(['/']);
   }
 
 }
