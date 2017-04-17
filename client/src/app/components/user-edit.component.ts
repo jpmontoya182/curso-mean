@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 import { UserService } from '../services/user.service';
+import { UploadService } from '../services/upload.service'
 import { User } from '../models/user';
 
 @Component({
     selector : 'user-edit',
     templateUrl : '../views/user-edit.html',
-    providers : [UserService]
+    providers : [UserService, UploadService]
 })
 
 export class UserEditComponent implements OnInit{
@@ -18,7 +19,8 @@ export class UserEditComponent implements OnInit{
     public url : string ;
 
     constructor(
-        private _userService : UserService
+        private _userService : UserService,
+        private _uploadService : UploadService
     ){
         this.titulo = 'Actualizar mis datos';        
         // localStorage
@@ -45,7 +47,7 @@ export class UserEditComponent implements OnInit{
                     if (!this.filesToUpload) {
                         // redireccion
                     } else {
-                        this.makeFileRequest(this.url+'upload-image-user/'+this.user._id,[],this.filesToUpload)
+                        this._uploadService.makeFileRequest(this.url + 'upload-image-user/' + this.user._id, [], this.filesToUpload, this.token, 'image')
                             .then((result: any)=>{
                                 this.user.image = result.image;
                                 localStorage.setItem('identity', JSON.stringify(this.user));
@@ -71,31 +73,5 @@ export class UserEditComponent implements OnInit{
 
     fileChangeEvent(fileInput : any){
         this.filesToUpload = <Array<File>>fileInput.target.files;        
-    }
-
-    makeFileRequest(url : string, params : Array<string>, files : Array<File>){
-        var token = this.token;
-
-        return new Promise((resolve, reject)=>{
-            var formData : any = new FormData();
-            var xhr = new XMLHttpRequest();
-
-            for (var i =  0; i < files.length; i++) {
-                formData.append('image', files[i], files[i].name);                
-            }
-
-            xhr.onreadystatechange = ()=>{
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        resolve(JSON.parse(xhr.response));
-                    } else {
-                        reject(xhr.response)
-                    }
-                } 
-            }
-            xhr.open('POST', url, true);
-            xhr.setRequestHeader('Authorization', token);
-            xhr.send(formData);
-        });
-    }
+    }   
 }

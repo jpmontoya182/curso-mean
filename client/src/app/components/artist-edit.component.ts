@@ -3,17 +3,18 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { UserService } from '../services/user.service';
 import { ArtistService } from '../services/artist.service';
+import { UploadService } from "../services/upload.service";
 import { Artist } from '../models/artist';
 
 @Component({
     selector: 'artist-edit', 
     templateUrl : '../views/artist-add.html',
-    providers : [UserService, ArtistService]
+    providers : [UserService, ArtistService, UploadService]
 })
 
 export class ArtistEditComponent implements OnInit{
     public titulo : string ;
-    public artists : Artist;
+    public artist : Artist;
     public identity;
     public token;
     public url: string;
@@ -24,37 +25,87 @@ export class ArtistEditComponent implements OnInit{
         private _route: ActivatedRoute, 
         private _router : Router,
         private _userService : UserService,
-        private _artistService : ArtistService
+        private _artistService : ArtistService,
+        private _uploadService : UploadService
     ){
-        this.titulo = 'Crear Nuevo Artista';
+        this.titulo = 'Editar Artista';
         this.identity = this._userService.getIdentity();
         this.token = this._userService.getToken();
         this.url = this._userService.url;
-        this.artists = new Artist('', '', '');
+        this.artist = new Artist('', '', '');
         this.is_edit = true;
       }
 
     ngOnInit(){
-       // llamar el metodo del api para obtener el artista(getArtist)
-       
+       this.getArtist();
+    }
+
+    getArtist(){
+        this._route.params.forEach((params : Params) =>{
+            let id = params['id'];
+            this._artistService.getArtist(this.token, id).subscribe(
+                response => {  
+                    if (!response.artist) {
+                        this._router.navigate(['/']);
+                    } else {                        
+                        this.artist = response.artist;   
+                    }
+                }, 
+                error => {
+                    var errorMensaje = <any>error;
+                    if (errorMensaje != null) {
+                        let body = JSON.parse(error._body);
+                        // this.alertMessage = body.message;
+                        console.log(error);
+                    }
+                }
+            );
+        });
     }
 
     onSubmit(){
-        this._artistService.addArtist(this.token, this.artists).subscribe(
-            response => {                
-                if (!response.artist) {
-                    this.alertMessage = 'Error en el servidor'
-                } else {
-                    this.artists = response.artist;
-                    this._router.navigate(['/editar-artista'], response.artist._id);
-                }
-            }, 
-            error => {
-                var errorMensaje = <any>error;
-                if (errorMensaje != null) {
-                    let body = JSON.parse(error._body);
-                    this.alertMessage = body.message;
-                } 
-            });
+        this._route.params.forEach((params : Params) =>{
+        let id = params['id'];
+
+        this._artistService.editArtist(this.token,id, this.artist).subscribe(
+                response => {                
+                    if (!response.artist) {
+                        this.alertMessage = 'Error en el servidor'
+                    } else {
+                        if (!this.filesToUpload) {
+                            this._router.navigate(['/artistas', 1]);  
+                        } else {
+                        // subir la imagen del artista
+                            this._uploadService.makeFileRequest(this.url + 'upload-image-artist/' + id, [], this.filesToUpload, this.token, 'image')
+                                .then(                                
+                                    (result) => {                                    
+                                        // falta evaluar cuando viene un mensaje con un error
+                                        this._router.navigate(['/artistas', 1]);                                     
+                                    }, 
+                                    (error) => {
+                                        console.log(error);
+                                    }
+                                )
+                        }
+
+
+                    }
+                }, 
+                error => {
+                    var errorMensaje = <any>error;
+                    if (errorMensaje != null) {
+                        let body = JSON.parse(error._body);
+                        this.alertMessage = body.message;
+                    } 
+                });
+        });
+    }        
+
+
+    public filesToUpload : Array<File>;
+    fileChangeEvent(fileInput : any){        
+        this.filesToUpload = <Array<File>>fileInput.target.files;
+        console.log(this.filesToUpload);
+        
     }
 }

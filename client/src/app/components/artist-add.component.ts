@@ -12,7 +12,7 @@ import { Artist } from '../models/artist';
 
 export class ArtistAddComponent implements OnInit{
     public titulo : string ;
-    public artists : Artist;
+    public artist : Artist;
     public identity;
     public token;
     public url: string;
@@ -28,7 +28,7 @@ export class ArtistAddComponent implements OnInit{
         this.identity = this._userService.getIdentity();
         this.token = this._userService.getToken();
         this.url = this._userService.url;
-        this.artists = new Artist('', '', '');
+        this.artist = new Artist('', '', '');
       }
 
     ngOnInit(){
@@ -36,13 +36,13 @@ export class ArtistAddComponent implements OnInit{
     }
 
     onSubmit(){
-        this._artistService.addArtist(this.token, this.artists).subscribe(
+        this._artistService.addArtist(this.token, this.artist).subscribe(
             response => {                
                 if (!response.artist) {
                     this.alertMessage = 'Error en el servidor'
                 } else {
-                    this.artists = response.artist;
-                    this._router.navigate(['/editar-artista'], response.artist._id);
+                    this.artist = response.artist;
+                    this._router.navigate(['/editar-artista', response.artist._id]);
                 }
             }, 
             error => {

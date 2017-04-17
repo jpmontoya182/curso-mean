@@ -48,7 +48,7 @@ function saveArtist(req, res){
 // Obtenemos todos los artitas 
 function getAllArtists(req, res){
     var page = req.params.page || 1;
-    var itemsPerPage = 3;
+    var itemsPerPage = 4;
 
     Artist.find().sort('name').paginate(page, itemsPerPage, (err, artists, total)=>{
         if (err) {
@@ -131,7 +131,7 @@ function uploadImage(req, res){
         var ext_split = file_name.split('\.');
         var file_ext = ext_split[1];
 
-        if( file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif')
+        if( file_ext.toLowerCase() == 'png' || file_ext.toLocaleLowerCase() == 'jpg' || file_ext.toLowerCase() == 'gif')
         {
             Artist.findByIdAndUpdate(artistId, {image : file_name}, (err, artistUpdated)=>{
             if(!artistUpdated){
