@@ -127,7 +127,7 @@ function uploadImage(req, res){
         var ext_split = file_name.split('\.');
         var file_ext = ext_split[1];
 
-        if( file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif')
+        if( file_ext.toLowerCase() == 'png' || file_ext.toLowerCase() == 'jpg' || file_ext.toLowerCase() == 'gif')
         {
             Album.findByIdAndUpdate(albumId, {image : file_name}, (err, albumUpdated)=>{
                 if (err) {
@@ -152,9 +152,10 @@ function uploadImage(req, res){
 // obtener las imagenes del servidor
 function getImageFile(req, res){
     var imageFile = req.params.imageFile;
-    var path_File = './uploads/album/' + imageFile;
+    var path_File = './uploads/albums/' + imageFile;
     fs.exists(path_File, function(exists){
         if(exists){
+           
             res.sendFile(path.resolve(path_File));
         }else{
             res.status(200).send({message : 'No existe la imagen ...'});

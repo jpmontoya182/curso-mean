@@ -1,6 +1,5 @@
 import { OnInit, Component } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
 import { UserService } from '../services/user.service';
 import { ArtistService } from '../services/artist.service';
 import { UploadService } from "../services/upload.service";
@@ -37,7 +36,7 @@ export class ArtistEditComponent implements OnInit{
       }
 
     ngOnInit(){
-       this.getArtist();
+       this.getArtist();            
     }
 
     getArtist(){

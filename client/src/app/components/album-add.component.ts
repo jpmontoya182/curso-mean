@@ -1,15 +1,15 @@
 import { OnInit, Component } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
 import { UserService } from '../services/user.service';
 import { ArtistService } from '../services/artist.service';
+import { AlbumService } from '../services/album.service';
 import { Artist } from '../models/artist';
 import { Album } from '../models/album';
 
 @Component({
     selector: 'album-add', 
     templateUrl : '../views/album-add.html',
-    providers : [UserService, ArtistService]
+    providers : [UserService, ArtistService, AlbumService]
 })
 
 export class AlbumAddComponent implements OnInit{
@@ -21,12 +21,12 @@ export class AlbumAddComponent implements OnInit{
     public url: string;
     public alertMessage : string;
 
-
     constructor(
         private _route: ActivatedRoute, 
         private _router : Router,
         private _userService : UserService,
-        private _artistService : ArtistService
+        private _artistService : ArtistService, 
+        private _albumService : AlbumService
     ){
         this.titulo = 'Crear nuevo Album';
         this.identity = this._userService.getIdentity();
@@ -37,6 +37,35 @@ export class AlbumAddComponent implements OnInit{
 
     ngOnInit(){
        
+    }
+
+    onSubmit(){
+        this._route.params.forEach((params : Params) => {
+            let artist_id = params['artist'];
+            this.album.artist = artist_id;
+
+            this._albumService.addAlbum(this.token, this.album).subscribe(
+                response => {
+                    if (!response.album) {
+                        this.alertMessage = 'Error en el servidor';
+                    } else {
+                        this.alertMessage = 'El album se ha creado correctamente !';
+                        this.album = response.album; 
+                        // this._router.navigate()                       
+                    }
+                },
+                error => {
+                    var errorMensaje = <any>error;
+                    if (errorMensaje != null) {
+                        let body = JSON.parse(error._body);
+                        this.alertMessage = body.message;
+                        console.log(error);
+                    }
+
+                }
+            )
+        });
+        console.log(this.album);
     }
 
 }
