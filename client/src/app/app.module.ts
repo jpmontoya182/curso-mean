@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { NgFor } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -25,14 +26,9 @@ import { AlbumEditComponent } from './components/album-edit.component'
     ArtistEditComponent,
     ArtistDetailComponent,
     AlbumAddComponent,
-    AlbumEditComponent
+    AlbumEditComponent    
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule, 
-    routing
-  ],
+  imports: [BrowserModule,FormsModule, HttpModule, routing, NgFor],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]
 })
