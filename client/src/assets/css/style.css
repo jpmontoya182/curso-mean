@@ -3,20 +3,32 @@ html, body{
     height: 100%;
     background-color: #eee;
 }
+.actived{
+    border-bottom: 4px solid #84BD00;
+    padding-bottom: 4px;
+}
+.central{
+    height: 100%;
+    overflow: scroll;
+}
+
+.confirmacion{
+    margin-top: -30px;
+    position: absolute;
+    background: #222336;
+    height: 40px;
+}
+.confirmacion-album{
+    margin-top: -41px;
+    margin-left: 10px;
+}
+/* Barra Lateral */
 .head-title{
     font-size: 20px;
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 25px;
     display: block;
-}
-.central{
-    height: 100%;
-    overflow: scroll;
-}
-.actived{
-    border-bottom: 4px solid #84BD00;
-    padding-bottom: 4px;
 }
 .navigation{
     text-align: center;
@@ -39,8 +51,9 @@ html, body{
     display: block;
     width: 100%;
 }
+
 #user-logged{
-    text-align: center;
+    text-decoration: center;
     background: #1c1c1f;
     position: absolute;
     bottom: 0px;
@@ -63,43 +76,7 @@ html, body{
     cursor: pointer;
 }
 
-.artist_image_for_edit img, .album_image_for_edit img {
-    width: 300px;
-}
-
-.artists-list{
-    margin : 0px;
-    padding : 0px;
-    margin-top: 30px;
-    list-style: none;
-}
-.artist-item{
-    width: 23%;
-    margin : 0px;
-    padding : 0px;
-    height: 317px;
-    border : 1px solid #444;
-    margin-left: 20px;
-    margin-top: 20px;
-}
-.artist-item .artist-image{
-   height: 245px;
-   width: 100%;
-   overflow: hidden; 
-   background: #000;
-}
-.artist-item .artist-image img{
-    min-width: 100%;
-    height: 100%;
-}
-.artist-item .artist-name{
-    color: #FFF;
-    padding: 10px;
-    background: #222336;
-}
-.artist-item .artist-name a{
-    color: #FFF;
-}
+/*detalle del artista*/
 #artist-head-card .image{
     width : 150px;
     height: 150px;
@@ -110,8 +87,59 @@ html, body{
 #artist-head-card .image img{
     height: 130px;
 }
-.confirmacion{
-    margin-top: -30px;
-    position: absolute;
+/*Artistas y Albums*/
+.artist_image_for_edit img, .album_image_for_edit img{
+    width: 300px;
+}
+
+.artists-list, 
+.albums-list{
+    margin : 0px;
+    padding : 0px;
+    margin-top: 30px;
+    list-style: none;
+}
+.artist-item, 
+.album-item{
+    width: 23%;
+    margin : 0px;
+    padding : 0px;
+    height: 317px;
+    border : 1px solid #444;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.artist-item .artist-image,
+.album-item .album-image {
+   height: 245px;
+   width: 100%;
+   overflow: hidden; 
+   background: #000;
+}
+
+.artist-item .artist-image img {
+    height: 100%;
+}
+
+.artist-item .artist-name,
+.album-item .album-name{
+    color: #FFF;
+    padding: 11px;
     background: #222336;
+    width: 100%;
+}
+
+.artist-item .artist-name a,
+.album-item .album-name a{
+    color: #FFF;
+}
+
+/*Albums*/
+.album-item{
+   height: 360px; 
+}
+
+.album-item .album-image img{
+    width: 100%;
 }

@@ -72,14 +72,14 @@ export class ArtistEditComponent implements OnInit{
                         this.alertMessage = 'Error en el servidor'
                     } else {
                         if (!this.filesToUpload) {
-                            this._router.navigate(['/artistas', 1]);  
+                            this._router.navigate(['/artistas', response.artist._id]);  
                         } else {
                         // subir la imagen del artista
                             this._uploadService.makeFileRequest(this.url + 'upload-image-artist/' + id, [], this.filesToUpload, this.token, 'image')
                                 .then(                                
                                     (result) => {                                    
                                         // falta evaluar cuando viene un mensaje con un error
-                                        this._router.navigate(['/artistas', 1]);                                     
+                                        this._router.navigate(['/artistas',response.artist._id ]);                                     
                                     }, 
                                     (error) => {
                                         console.log(error);

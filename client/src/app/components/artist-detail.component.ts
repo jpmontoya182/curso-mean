@@ -20,6 +20,7 @@ export class ArtistDetailComponent implements OnInit{
     public token;
     public url: string;
     public alertMessage : string;
+    public confirmado: string;
 
     constructor(
         private _route: ActivatedRoute, 
@@ -45,17 +46,15 @@ export class ArtistDetailComponent implements OnInit{
                     if (!response.artist) {
                         this._router.navigate(['/']);
                     } else {                        
-                        this.artist = response.artist;   
+                        this.artist = response.artist;  
                         // mostrar los albumes relacionados
                         this._albumService.getAlbums(this.token, response.artist._id).subscribe(
-                            response => {                                
-                                if (!response.albums) {
+                            response => {                           
+                                if (!response.album) {
                                     this.alertMessage = 'Este artista no tiene albums';
-                                    console.log(response.albums);
                                 } else {
                                     this.alertMessage = '';
-                                    this.albums = response.albums;
-                                    console.log(response.albums)
+                                    this.albums = response.album;
                                 }    
                             }, 
                             error => {
@@ -80,4 +79,34 @@ export class ArtistDetailComponent implements OnInit{
             );
         });
     }    
+
+
+    onDeleteConfirm(id){
+        this.confirmado = id;
+    }
+
+    onCancelAlbum(){
+       this.confirmado = null; 
+    }
+
+    onDeleteAlbum(id){
+        this._albumService.deleteAlbum(this.token, id).subscribe(
+            response => {
+                if (!response.album) {
+                    console.log('Error en el servidor !!')
+                } else {
+                   this.getArtist(); 
+                }
+            }, 
+            error => {
+                var errorMensaje = <any>error;
+                if (errorMensaje != null) {
+                    let body = JSON.parse(error._body);
+                    this.alertMessage = body.message;
+                    console.log(error);
+                }
+            }    
+        )
+    }
+
 }
