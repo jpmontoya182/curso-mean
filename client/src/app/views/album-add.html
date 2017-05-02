@@ -1,4 +1,4 @@
-<div class="col-lg-6">   
+<div class="col-lg-6" *ngIf="identity && identity.role == 'ROLE_ADMIN'"> 
     <div *ngIf="alertMessage">
         <div class="alert alert-info">
             <strong>Error: </strong> {{ alertMessage }}

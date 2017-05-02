@@ -113,7 +113,6 @@ function uploadFile(req, res){
     var file_name = 'Imagen no cargada';
 
     if(req.files){
-        console.log(req.files)
         var file_path = req.files.file.path;
         var file_split = file_path.split('\\');
         file_name = file_split[file_split.length - 1];
@@ -139,7 +138,6 @@ function uploadFile(req, res){
 // obtener las imagenes del servidor
 function getFileSong(req, res){    
     var songFile = req.params.file;
-    console.log(songFile);
     var path_File = './uploads/songs/' + songFile;
     fs.exists(path_File, function(exists){
         if(exists){

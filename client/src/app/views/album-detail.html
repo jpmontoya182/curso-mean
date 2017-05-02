@@ -1,0 +1,37 @@
+<div class="album-box" *ngIf="album">
+    <div id="album-head-card">
+        <div class="image">
+            <img src="{{url + 'get-image-album/' + album.image}}" />
+        </div>
+        <div class="data">
+            <h1>{{album.title}}</h1>
+            <p><strong>{{album.artist.name}}</strong></p>
+            <p>{{album.year}}</p>
+            <p>{{album.description}}</p>
+            <a [routerLink]="['/crear-cancion', album._id]" class="btn btn-default" *ngIf="identity.role == 'ROLE_ADMIN'">
+                Adicionar canción
+            </a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="gallery-songs" *ngIf="songs">
+        <ul id="songs-list">
+            <li *ngFor="let song of songs" class="song-item">
+                <div class="title">
+                    <a class="btn btn-success">
+                        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                    </a>
+                    {{song.number + '. ' + song.name + ' - ' + song.duration}}
+                    <p>
+                        <a [routerLink]="['/editar-cancion', song._id]" class="btn btn-warning">
+                            Editar
+                        </a>
+                        <a [routerLink]="['/editar-cancion', song._id]" class="btn btn-danger">
+                            Borrar
+                        </a>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>  
