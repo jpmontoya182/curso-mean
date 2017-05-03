@@ -22,14 +22,23 @@
                         <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
                     </a>
                     {{song.number + '. ' + song.name + ' - ' + song.duration}}
-                    <p>
+                    <div class="buttons" *ngIf="identity && identity.role == 'ROLE_ADMIN'">
                         <a [routerLink]="['/editar-cancion', song._id]" class="btn btn-warning">
                             Editar
                         </a>
-                        <a [routerLink]="['/editar-cancion', song._id]" class="btn btn-danger">
+                        <a (click)="onDeleteConfirm(song._id)" class="btn btn-danger">
                             Borrar
                         </a>
-                    </p>
+                    </div>
+                    <div class="confirmacion confirmacion-song" *ngIf="confirmado == song._id">
+                        <a (click)="onDeleteSong(song._id)" class="btn btn-danger">
+                            Eliminar
+                        </a>
+                        <a (click)="onCancelSong()" class="btn btn-primary">
+                            Cancelar
+                        </a>
+                    </div>                    
+                    <div class="clearfix"></div>
                 </div>
             </li>
         </ul>

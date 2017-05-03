@@ -3,7 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 // mapear objectos 
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
-import {GLOBAL} from './GLOBAL';
+import { transversales } from './GLOBAL';
 import { Album } from '../models/album';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class AlbumService{
     public url: string;
 
     constructor(private _http: Http){
-        this.url = GLOBAL.url;
+        this.url = transversales.url;
     }
 
     //

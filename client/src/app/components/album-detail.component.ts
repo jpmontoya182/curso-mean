@@ -21,6 +21,7 @@ export class AlbumDetailComponent implements OnInit{
     public token;
     public url: string;
     public alertMessage : string;
+    public confirmado: string;
 
     constructor(
         private _route: ActivatedRoute, 
@@ -78,5 +79,31 @@ export class AlbumDetailComponent implements OnInit{
                 }
             );
         }); 
-    }    
+    } 
+    onDeleteConfirm(id: string)   {
+        this.confirmado = id;
+    }
+    onCancelSong(){
+        this.confirmado = null;
+    }
+    onDeleteSong(id){
+        this._songService.deleteSong(this.token, id).subscribe(
+            response => {
+                if (!response.song) {
+                    this.alertMessage = 'Error en el servidor';
+                } else {
+                   this.confirmado = null; 
+                   this.getAlbum();
+                }
+            }, 
+            error => {
+                var errorMensaje = <any>error;
+                if (errorMensaje != null) {
+                    let body = JSON.parse(error._body);
+                    this.alertMessage = body.message;
+                    console.log(error);
+                } 
+            }
+        );
+    }
 }

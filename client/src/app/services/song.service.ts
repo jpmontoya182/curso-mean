@@ -3,7 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 // mapear objectos 
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
-import {GLOBAL} from './GLOBAL';
+import {transversales} from './GLOBAL';
 import { Song } from '../models/song';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class SongService{
     public url: string;
 
     constructor(private _http: Http){
-        this.url = GLOBAL.url;
+        this.url = transversales.url;
     }
     getSong(token, id: string){
         let headers = new Headers({

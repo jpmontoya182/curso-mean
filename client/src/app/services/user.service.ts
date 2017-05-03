@@ -3,7 +3,7 @@ import { Http, Response, Headers } from '@angular/http';
 // mapear objectos 
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
-import {GLOBAL} from './GLOBAL';
+import { transversales } from './GLOBAL';
 
 @Injectable()
 export class UserService{
@@ -12,7 +12,7 @@ export class UserService{
     public token;
 
     constructor(private _https: Http){
-        this.url = GLOBAL.url;
+        this.url = transversales.url;
     }
 
     public singup(user_to_login, gethash = null){

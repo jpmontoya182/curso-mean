@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map'; // -> mapear objectos 
 import { Observable } from 'rxjs/Observable';
-import { GLOBAL } from './GLOBAL';
+import { transversales } from './GLOBAL';
 import { Artist } from '../models/artist';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class UploadService{
     public url: string;
 
     constructor(private _http: Http){
-        this.url = GLOBAL.url;
+        this.url = transversales.url;
     }
 
      makeFileRequest(url : string, params : Array<string>, files : Array<File>, token : string, name : string){ 
