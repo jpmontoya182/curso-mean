@@ -21,12 +21,12 @@ import { transversales } from '../services/global'
             </span>
             |
             <span id="play-song-artist">
-                <span *ngIf="song.artist">
+                <span *ngIf="song.album.artist">
                     {{song.album.artist.name}}
                 </span>                
             </span>
             <audio controls id="player">
-                <source id="mp3-source" src="{{url + 'get-song-file/' + song.file }}" type="audio/mpeg" >
+                <source id="mp3-source" src="{{url + 'get-file-song/' + song.file }}" type="audio/mpeg" >
                     Tu navegador no es compatible con el reproductor
             </audio>
         </div>
@@ -39,10 +39,15 @@ export class PlayerComponent implements OnInit{
 
     constructor(){
        this.url = transversales.url;
-       this.song = new Song(1,'', '', '', '');
+
     }
 
     ngOnInit(){
-
+        var song = JSON.parse(localStorage.getItem('sound_song'));
+        if (song) {
+            this.song = song;
+        } else {
+            this.song = new Song(1,'', '', '', '');
+        }
     }
 }

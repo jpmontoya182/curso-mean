@@ -52,7 +52,7 @@ export class AlbumDetailComponent implements OnInit{
 
                         this._songService.getSongs(this.token, response.album._id).subscribe(
                             response => {
-                               if (!response.songs) {
+                               if (!response.songs || response.songs.length == 0) {
                                    this.alertMessage = 'Este album no tiene canciones';
                                } else {
                                    this.songs = response.songs;
@@ -62,7 +62,7 @@ export class AlbumDetailComponent implements OnInit{
                                 var errorMensaje = <any>error;
                                 if (errorMensaje != null) {
                                     let body = JSON.parse(error._body);
-                                    // this.alertMessage = body.message;
+                                    this.alertMessage = body.message;
                                     console.log(error);
                                 }
                             }
@@ -105,5 +105,20 @@ export class AlbumDetailComponent implements OnInit{
                 } 
             }
         );
+    }
+    startPlayer(song){
+        let song_player = JSON.stringify(song);
+        let file_path = this.url + 'get-file-song/' + song.file;
+        let image_path = this.url + 'get-image-album/' + song.album.image;
+
+        localStorage.setItem('sound_song', song_player);
+
+        document.getElementById('mp3-source').setAttribute('src', file_path);
+        (document.getElementById('player') as any).load();
+        (document.getElementById('player') as any).play();
+
+        document.getElementById('play-song-title').innerHTML = song.name;
+        document.getElementById('play-song-artist').innerHTML = song.album.artist.name;
+        document.getElementById('play-image-album').setAttribute('src', image_path);
     }
 }

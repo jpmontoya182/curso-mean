@@ -100,7 +100,7 @@ html, body{
 }
 
 .artists-list, 
-.albums-list{
+.album-list{
     margin : 0px;
     padding : 0px;
     margin-top: 30px;
@@ -115,6 +115,7 @@ html, body{
     height: 317px;
     border : 1px solid #444;
     margin-left: 20px;
+    background: #222336;
 }
 
 .artist-item .artist-image,
@@ -143,18 +144,26 @@ html, body{
 }
 
 /*Albums*/
-.album-item{
-   height: 360px; 
+.album-list{
+   height: auto;
+   margin-bottom: 980px;
 }
-
+.album-item .album-image {
+    height: 188px;
+}
+.album-item{
+   height: 300px; 
+   margin-bottom: 20px;
+}
 .album-item .album-image img{
     width: 100%;
 }
-
 /*Canciones*/
 #song-list{
     margin: 0px;
     padding: 0px;
+    min-height: 800px;
+    margin-bottom: 20px;
 }
 .song-item{
     list-style: none;
@@ -180,6 +189,7 @@ html, body{
     padding: 20px;
     margin-left: -15px;
     border: 1px solid #444;
+    color: gray;
 }
 
 .player .album-image{

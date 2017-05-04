@@ -23,7 +23,7 @@
     <div class="clearfix"></div>
 
     <div class="gallery-albums" *ngIf="albums">
-        <ul class="albums-list">
+        <ul class="album-list">
             <li *ngFor="let album of albums" class="col-lg-4 album-item">
                 <div class="album-image">
                     <img src="{{url + 'get-image-album/'+ album.image}}">
